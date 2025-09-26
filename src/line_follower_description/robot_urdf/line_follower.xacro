@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<robot name="line_follower" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find line_follower_description)/robot_urdf/materials.xacro" />
+  <!-- <xacro:include filename="$(find line_follower_description)/robot_urdf/line_follower.trans" /> -->
+  <xacro:include filename="$(find line_follower_description)/robot_urdf/line_follower.gazebo" />
+  <xacro:include filename="$(find line_follower_description)/robot_urdf/base_footprint.xacro" />
+  <xacro:include filename="$(find line_follower_description)/robot_urdf/plugins.xacro" />
+  <xacro:include filename="$(find line_follower_description)/robot_urdf/camera.xacro" />
+
+  <link name="base_link">
+    <inertial>
+  <mass value="5.0"/>
+  <origin xyz="0 0 0"/>
+  <inertia ixx="0.02" iyy="0.02" izz="0.02"
+           ixy="0.0" iyz="0.0" ixz="0.0"/>
+</inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 3.14" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/base_link.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="silver" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 3.14" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/base_link.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="wheel_1_1">
+    <inertial>
+      <origin xyz="0.01859566269725499 -1.3657020569990408e-08 2.287040556936404e-09" rpy="0 0 0" />
+      <mass value="0.2827149727810706" />
+      <inertia ixx="0.000365" iyy="0.000217" izz="0.000217" ixy="0.0" iyz="0.0" ixz="-0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0782267 0 -0.0155" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/wheel_1_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <origin xyz="0.0782267 0 -0.0155" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/wheel_1_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- <gazebo reference="wheel_1_1">
+  <mu1>0.001</mu1>
+  <mu2>0.001</mu2>
+</gazebo> -->
+
+  <link name="wheel_2_1">
+    <inertial>
+      <origin xyz="0.01859566269725499 -4.3103450531045695e-09 -1.3159243784921504e-08" rpy="0 0 0" />
+      <mass value="0.2827149727810706" />
+      <inertia ixx="0.000365" iyy="0.000217" izz="0.000217" ixy="0.0" iyz="-0.0" ixz="0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.0782267 0 -0.0155" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/wheel_2_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <origin xyz="-0.0782267 0 -0.0155" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/wheel_2_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- <gazebo reference="wheel_2_1">
+  <mu1>0.001</mu1>
+  <mu2>0.001</mu2>
+</gazebo> -->
+
+
+  <link name="depth_camera_1">
+    <inertial>
+      <origin xyz="1.065498605964156e-13 0.019926811994094296 0.014499999999999943" rpy="0 0 0" />
+      <mass value="0.05573270671530081" />
+      <inertia ixx="6e-06" iyy="3.6e-05" izz="3.7e-05" ixy="-0.0" iyz="-0.0" ixz="0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.0 -0.08 -0.13" rpy="0 0 3.14" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/depth_camera_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="silver" />
+    </visual>
+    <collision>
+      <origin xyz="-0.0 -0.08 -0.13" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/depth_camera_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="lidar">
+    <!-- <inertial>
+      <origin xyz="1.065498605964156e-13 0.019926811994094296 0.014499999999999943" rpy="0 0 0" />
+      <mass value="0.05573270671530081" />
+      <inertia ixx="6e-06" iyy="3.6e-05" izz="3.7e-05" ixy="-0.0" iyz="-0.0" ixz="0.0" />
+    </inertial> -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 3.14" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/Lidar.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="red" />
+    </visual>
+    <collision>
+      <origin xyz="-0.0 -0.08 -0.13" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file://$(find line_follower_description)/meshes/Lidar.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+  <origin xyz="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="lidar"/>
+</joint>
+
+
+<joint name="caster_joint" type="fixed">
+  <origin xyz="0 0.08 -0.001"/>
+  <parent link="base_link"/>
+  <child link="caster"/>
+</joint>
+
+<link name="caster">
+  <visual>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.01"/>
+    <origin xyz="0 0 0"/>
+    <inertia ixx="1e-5" iyy="1e-5" izz="1e-5" ixy="0" ixz="0" iyz="0"/>
+  </inertial>
+</link>
+<gazebo reference="caster">
+  <mu1>0.001</mu1>
+  <mu2>0.001</mu2>
+</gazebo>
+
+<joint name="caster_joint2" type="fixed">
+  <origin xyz="0 -0.08 -0.001"/>
+  <parent link="base_link"/>
+  <child link="caster2"/>
+
+</joint>
+
+<link name="caster2">
+  <visual>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.01"/>
+    <origin xyz="0 0 0"/>
+    <inertia ixx="1e-5" iyy="1e-5" izz="1e-5" ixy="0" ixz="0" iyz="0"/>
+  </inertial>
+</link>
+<gazebo reference="caster2">
+  <mu1>0.001</mu1>
+  <mu2>0.001</mu2>
+</gazebo>
+
+  <joint name="base_link_to_wheel_1" type="continuous">
+    <origin xyz="-0.0782267 0 0.0155" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wheel_1_1" />
+    <axis xyz="1.0 0.0 0.0" />
+  </joint>
+
+  <joint name="base_link_to_wheel_2" type="continuous">
+    <origin xyz="0.0782267 0 0.0155" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wheel_2_1" />
+    <axis xyz="1.0 0.0 0.0" />
+  </joint>
+
+  <joint name="base_link_to_depth_camera" type="fixed">
+    <origin xyz="0.0 0.08 0.13" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="depth_camera_1" />
+  </joint>
+
+</robot>
